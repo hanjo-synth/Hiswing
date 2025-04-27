@@ -2,14 +2,6 @@
 
 **HiSwing: Pattern Generator v4.0** is a dynamic and customizable pattern generator for Monome Norns. This script generates MIDI note patterns with adjustable groove templates, pattern lengths, step velocities, and reduction amounts. Ideal for creating evolving drum and basslines.
 
-## Features
-
-- **K2:** Randomize step velocities for unique, evolving patterns.
-- **E2:** Adjust pattern length (1–16 steps).
-- **E3:** Change between groove templates for varied rhythmic feels.
-- **K3 + E2:** Change MIDI channel for multi-device setups.
-- **K3 + E3:** Adjust pattern reduction to randomize active steps (0%–100%).
-
 ## Installation
 
 1. Clone or download the repository to your Norns device.
