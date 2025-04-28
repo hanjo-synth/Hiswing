@@ -1,6 +1,6 @@
 # HiSwing: Pattern Generator
 
-**HiSwing: Pattern Generator** is a dynamic and customizable pattern and groove midi generator for Monome Norns. This script generates MIDI note patterns with adjustable groove templates, pattern lengths, step velocities, and reduction amounts. Ideal for creating evolving percussions, hi hats and basslines.
+**HiSwing v1.0** is a dynamic and customizable pattern and groove midi generator for Monome Norns. This script generates MIDI note patterns with adjustable groove templates, pattern lengths, step velocities, and reduction amounts. Ideal for creating evolving percussions, hi hats and basslines.
 
 ## Installation
 
