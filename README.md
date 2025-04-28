@@ -1,4 +1,4 @@
-# **HISWING**
+# **HiSwing**
 
 **HiSwing** is a dynamic and customizable pattern and groove MIDI generator for Monome Norns.  
 Create evolving percussions, hi-hats, and basslines with shifting velocity, pattern length, and density.
