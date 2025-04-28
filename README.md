@@ -5,6 +5,8 @@ Create evolving percussions, hi-hats, and basslines with shifting velocity, patt
 
 A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and anchor.
 
+**Author:** HANJO – Tokyo, Japan 🇯🇵
+
 ---
 
 ## **FEATURES**
@@ -86,12 +88,3 @@ Patterns will evolve live without needing to stop playback.
 ## **LICENSE**
 
 MIT License (see [LICENSE](./LICENSE))
-
----
-
-## **CREDITS**
-
-- Script by **HANJO**  
-- Tokyo, Japan 🇯🇵
-
----
