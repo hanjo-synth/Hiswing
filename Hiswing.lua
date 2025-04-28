@@ -1,4 +1,4 @@
--- HiSwing: Pattern Generator v1.0
+-- HiSwing v1.0
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
 -- HANJŌ, Tokyo, Japan.
