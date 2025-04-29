@@ -2,7 +2,7 @@
 -- 
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
--- HANJŌ, Tokyo, Japan.
+-- HANJO, Tokyo, Japan.
 -- 
 -- K2: Randomize step velocities.
 -- E2: Change pattern length.
