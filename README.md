@@ -31,6 +31,12 @@ A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and a
 
 ---
 
+## **VIDEO**
+
+https://youtu.be/_qFI1p-oa7s?si=AOkmPuhBHiyQqp-e
+
+---
+
 ## **GROOVE TEMPLATES**
 
 - **HOUSE 1**:  
