@@ -33,7 +33,7 @@ A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and a
 
 ## **VIDEO**
 
-https://youtu.be/_qFI1p-oa7s?si=AOkmPuhBHiyQqp-e
+[![Watch the demo](https://img.youtube.com/vi/_qFI1p-oa7s/maxresdefault.jpg)](https://www.youtube.com/watch?v=_qFI1p-oa7s&t=29s)
 
 ---
 
