@@ -6,7 +6,7 @@ Create evolving percussions, hi-hats, and basslines with shifting velocity, patt
 A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and anchor.
 
 **Author:** HANJO – Tokyo, Japan 🇯🇵
-
+![Alt text](./images/Hiswing.png)
 ---
 
 ## **FEATURES**
