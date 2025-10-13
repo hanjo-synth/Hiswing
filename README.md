@@ -26,14 +26,22 @@ Update v2.0
 
 ## **CONTROLS**
 
-- **`K2`**: Randomize step velocities
-- **`E2`**: Change pattern length (1–16 steps)
-- **`E3`**: Switch groove template
-- **`K3` + `E2`**: Adjust MIDI channel (1–16)
-- **`K3` + `E3`**: Adjust pattern reduction (0–100%)
+- **`K3 + E1`**: Toggle pages
 
-> **Note:**  
-> **`E1`** is unused in this version.
+- **`K2`**: Randomize step velocities  
+- **`E2`**: Change pattern length  
+- **`E3`**: Change groove template  
+- **`K3 + E2`**: Change MIDI channel  
+- **`K3 + E3`**: Adjust pattern reduction  
+
+---
+
+### **On Note Page**
+
+- **`E1`**: Change root note  
+- **`K3 + E2`**: Change scale  
+- **`E2`**: Navigate and select steps  
+- **`E3`**: Change note value  
 
 ---
 
