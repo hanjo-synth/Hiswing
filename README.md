@@ -8,7 +8,7 @@ A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and a
 **Author:** HANJO – Tokyo, Japan 🇯🇵
 
 ---
-## **FEATURES**
+## **UPDATE**
 New Release v2.0 
 - Includes a second page with a Cirklon inspired in scale note randomization that carries over the groove.
 
