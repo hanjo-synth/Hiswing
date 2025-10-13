@@ -6,10 +6,10 @@ Create evolving percussions, hi-hats, and basslines with shifting velocity, patt
 A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and anchor.
 
 **Author:** HANJO – Tokyo, Japan 🇯🇵
-
+---
 ##**UPDATE**
-v1.0 Original HiSwing
-v2.0 Includes a second page with a Cirklon inspired in scale note randomization that carries over the groove.
+New Release v2.0 
+- Includes a second page with a Cirklon inspired in scale note randomization that carries over the groove.
 
 ![Alt text](./Hiswing.png)
 ---
