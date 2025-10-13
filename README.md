@@ -8,8 +8,9 @@ A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and a
 **Author:** HANJO – Tokyo, Japan 🇯🇵
 
 ---
-## **UPDATE**
-New Release v2.0 
+## **RELEASES**
+Oringinal v1.0
+Update v2.0 
 - Includes a second page with a Cirklon inspired in scale note randomization that carries over the groove.
 
 ![Alt text](./Hiswing.png)
