@@ -15,6 +15,7 @@ Update v2.0
 ![Alt text](./Hiswing.png)
 ---
 
+Note Mode:
 ![Alt text](./Hiswing_note.png)
 ---
 
