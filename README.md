@@ -119,7 +119,6 @@ Patterns will evolve live without needing to stop playback.
 - **S4R**: "Racing Pulse" 
 - **S5R**: "Rushed Shuffle" 
 
-*Cycle through modes with `K3 + K2`*
 ---
 
 
