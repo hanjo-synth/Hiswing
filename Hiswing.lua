@@ -1,5 +1,6 @@
--- HiSwing v2.0 
--- Circklon-style Note Sequencing
+-- HiSwing v2.1
+-- Circklon-style Note Sequencing Tr-909 inspired Swing
+-- Tr-909 inspired Swing
 -- 
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
@@ -456,3 +457,4 @@ function metro_redraw()
 end
 
 clock.run(metro_redraw)
+
