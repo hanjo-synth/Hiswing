@@ -1,5 +1,5 @@
--- HiSwing v2.1 
--- Circklon-style Note Sequencing and TR Shuffle
+-- HiSwing v2.0 
+-- Circklon-style Note Sequencing
 -- 
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
@@ -97,15 +97,15 @@ function get_swing_delay(step_num)
     local swing_level = swing_amount
     
     if swing_amount <= 5 then
-        -- Normal swing: delay even steps (S1-S5)
+        -- NORMAL SWING: delay even steps (S1-S5) - makes them later
         if is_even_step then
-            return swing_delay_times[swing_level]
+            return swing_delay_times[swing_level] -- Positive delay = later
         end
     else
-        -- Reverse swing: advance odd steps (S1R-S5R)
+        -- REVERSE SWING: advance even steps (S1R-S5R) - makes them earlier
         swing_level = swing_amount - 5 -- Convert 6-10 to 1-5
-        if not is_even_step and step_num > 1 then
-            return -swing_delay_times[swing_level]
+        if is_even_step then
+            return -swing_delay_times[swing_level] -- Negative delay = earlier
         end
     end
     
@@ -133,15 +133,15 @@ function get_visual_swing_offset(step_num)
     local swing_level = swing_amount
     
     if swing_amount <= 5 then
-        -- Normal swing: move even steps 1 pixel left per level
-        if is_even_step then
-            return -swing_level  -- Progressive left movement: -1, -2, -3, -4, -5 pixels
-        end
-    else
-        -- Reverse swing: move even steps 1 pixel right per level  
-        swing_level = swing_amount - 5 -- Convert 6-10 to 1-5
+        -- NORMAL SWING: delay even steps = move visual representation RIGHT
         if is_even_step then
             return swing_level  -- Progressive right movement: 1, 2, 3, 4, 5 pixels
+        end
+    else
+        -- REVERSE SWING: advance even steps = move visual representation LEFT
+        swing_level = swing_amount - 5 -- Convert 6-10 to 1-5
+        if is_even_step then
+            return -swing_level  -- Progressive left movement: -1, -2, -3, -4, -5 pixels
         end
     end
     
