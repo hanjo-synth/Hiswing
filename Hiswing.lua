@@ -1,5 +1,5 @@
--- HiSwing v2.0 
--- Circklon-style Note Sequencing
+-- HiSwing v2.1 
+-- Circklon-style Note Sequencing and TR Shuffle
 -- 
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
@@ -11,6 +11,7 @@
 -- E3: Change groove template.
 -- K3 + E2: Change MIDI channel
 -- K3 + E3: Pattern reduction
+-- K3 + K2: Change Swing mode
 -- 
 -- On Note Page:
 -- E1: Change root note 
@@ -18,6 +19,7 @@
 -- E2: Navigate and select steps
 -- E3: Change note value
 -- 
+
 local musicutil = require "musicutil"
 local midi = require "core/midi"
 
@@ -37,9 +39,14 @@ local note_page = false -- false = velocity page, true = note page
 local note_pattern = {} -- NOTE data from page 2 (completely separate from velocity)
 local selected_step = 1 -- Currently selected step on note page
 local root_note = 48 -- C3 as default root note
-local original_root_note = 48 -- Store original root for transposition
+local original_root_note = 48 -- Store original for transposition
 local scale_index = 1 -- Default scale
 local scales = musicutil.SCALES -- Use full musicutil scale library
+
+-- Swing system variables
+local swing_enabled = false
+local swing_amount = 0 -- 0=off, 1-5=normal swing, 6-10=reverse swing
+local swing_delay_times = {0, 2/96, 4/96, 6/96, 8/96, 10/96} -- TR-909 style delays (S1-S5)
 
 -- define grooves as absolute MIDI velocities
 local grooves = {
@@ -67,6 +74,78 @@ function init()
         print("Available scales: " .. #scales)
         clock.run(clock_run)
     end
+end
+
+function toggle_swing()
+    -- Cycle through: No swing (0), S1-S5 (1-5), No swing (0), S1R-S5R (6-10), No swing (0)
+    swing_amount = (swing_amount + 1) % 11
+    
+    if swing_amount == 0 then
+        swing_enabled = false
+    else
+        swing_enabled = true
+    end
+    redraw()
+end
+
+function get_swing_delay(step_num)
+    if not swing_enabled or swing_amount == 0 then
+        return 0
+    end
+    
+    local is_even_step = (step_num % 2 == 0)
+    local swing_level = swing_amount
+    
+    if swing_amount <= 5 then
+        -- Normal swing: delay even steps (S1-S5)
+        if is_even_step then
+            return swing_delay_times[swing_level]
+        end
+    else
+        -- Reverse swing: advance odd steps (S1R-S5R)
+        swing_level = swing_amount - 5 -- Convert 6-10 to 1-5
+        if not is_even_step and step_num > 1 then
+            return -swing_delay_times[swing_level]
+        end
+    end
+    
+    return 0
+end
+
+function get_swing_display()
+    if not swing_enabled or swing_amount == 0 then
+        return ""
+    end
+    
+    if swing_amount <= 5 then
+        return "S" .. swing_amount
+    else
+        return "S" .. (swing_amount - 5) .. "R"
+    end
+end
+
+function get_visual_swing_offset(step_num)
+    if not swing_enabled or swing_amount == 0 then
+        return 0
+    end
+    
+    local is_even_step = (step_num % 2 == 0)
+    local swing_level = swing_amount
+    
+    if swing_amount <= 5 then
+        -- Normal swing: move even steps 1 pixel left per level
+        if is_even_step then
+            return -swing_level  -- Progressive left movement: -1, -2, -3, -4, -5 pixels
+        end
+    else
+        -- Reverse swing: move even steps 1 pixel right per level  
+        swing_level = swing_amount - 5 -- Convert 6-10 to 1-5
+        if is_even_step then
+            return swing_level  -- Progressive right movement: 1, 2, 3, 4, 5 pixels
+        end
+    end
+    
+    return 0
 end
 
 function randomize_velocity_pattern()
@@ -121,6 +200,12 @@ end
 function play_step(step)
     if not active_steps[step] or not midi_device then return end
 
+    -- Apply swing timing if enabled
+    local swing_delay = get_swing_delay(step)
+    if swing_delay ~= 0 then
+        clock.sleep(math.abs(swing_delay))
+    end
+
     -- ALWAYS get velocity from VELOCITY pattern (page 1 data)
     local velocity = get_step_velocity(step)
     
@@ -173,19 +258,20 @@ end
 
 function key(n,z)
     if n == 2 and z == 1 then
-        if note_page then
-            randomize_note_pattern() -- Only affects NOTES
+        if holding_k3 then
+            -- K3 + K2: Change swing mode
+            toggle_swing()
         else
-            randomize_velocity_pattern() -- Only affects VELOCITY
-        end
-        redraw()
-    elseif n == 3 then
-        holding_k3 = (z == 1)
-        -- Check if we should toggle page when K3 is released
-        if z == 0 and holding_k3 then
-            note_page = not note_page
+            -- Single K2 press: Randomize patterns
+            if note_page then
+                randomize_note_pattern() -- Only affects NOTES
+            else
+                randomize_velocity_pattern() -- Only affects VELOCITY
+            end
             redraw()
         end
+    elseif n == 3 then
+        holding_k3 = (z == 1)
     end
 end
 
@@ -295,6 +381,10 @@ function redraw()
                 local note_height = util.linlin(24, 84, 4, 40, note_pattern[i]) -- INVERTED mapping
                 local x = 4 + (i-1)*width
                 
+                -- Apply visual swing offset for even steps
+                local swing_offset = get_visual_swing_offset(i)
+                x = x + swing_offset
+                
                 -- Draw step
                 screen.level(i == selected_step and 15 or 8) -- Highlight selected step
                 screen.move(x, 64)
@@ -307,13 +397,19 @@ function redraw()
         -- VELOCITY PAGE DISPLAY - Shows VELOCITY pattern
         screen.level(15)
         
-        -- Top info text
+        -- Top info text with swing indicator
         screen.move(10,10)
         if length == 0 then
             screen.text("STOP")
         else
-            screen.text("MIDI CH:"..midi_channel)
+            local swing_display = get_swing_display()
+            if swing_display ~= "" then
+                screen.text("MIDI CH:"..midi_channel.." "..swing_display)
+            else
+                screen.text("MIDI CH:"..midi_channel)
+            end
         end
+        
         screen.move(80,10)
         if length == 0 then
             screen.text("LEN: 0")
@@ -329,6 +425,11 @@ function redraw()
                     local velocity = get_step_velocity(i)
                     local height = util.linlin(1,127,0,40,velocity)
                     local x = 4 + (i-1)*width
+                    
+                    -- Apply visual swing offset for even steps
+                    local swing_offset = get_visual_swing_offset(i)
+                    x = x + swing_offset
+                    
                     screen.move(x, 64)
                     screen.line(x, 64-height)
                 end
