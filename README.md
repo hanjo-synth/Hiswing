@@ -103,6 +103,25 @@ Note Mode:
 Patterns will evolve live without needing to stop playback.
 
 ---
+## **SWING MODES**
+
+**Normal Swing:**
+- **S1**: "Gentle Push"
+- **S2**: "Pocket Groove" 
+- **S3**: "Swing Step"
+- **S4**: "Triplet Flow" 
+- **S5**: "Heavy Shuffle" 
+
+**Reverse Swing:**
+- **S1R**: "Rushed Feel"
+- **S2R**: "Anticipated" 
+- **S3R**: "Pushed Beat" 
+- **S4R**: "Racing Pulse" 
+- **S5R**: "Rushed Shuffle" 
+
+*Cycle through modes with `K3 + K2`*
+---
+
 
 ## **DEPENDENCIES**
 
