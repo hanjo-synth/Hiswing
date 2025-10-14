@@ -103,7 +103,7 @@ Note Mode:
 Patterns will evolve live without needing to stop playback.
 
 ---
-## **SWING MODES**
+## **SWING/ SHUFFLE MODES**
 
 **Normal Swing:**
 - **S1**: "Gentle Push"
