@@ -15,6 +15,10 @@ Update v2.0
 ![Alt text](./Hiswing.png)
 ---
 
+![Alt text](./Hiswing_note.png)
+---
+
+
 ## **FEATURES**
 
 - Generates dynamic 16-step MIDI patterns
