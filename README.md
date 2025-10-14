@@ -9,8 +9,9 @@ A tool for planting seeds of rhythm: patterns that rustle, shimmer, drift, and a
 
 ---
 ## **RELEASES**
-Update v2.0 
+Update v2.1 
 - Includes a second page with a Cirklon inspired in scale note randomization that carries over the groove.
+- Includes Tr-909 inspired Shuffle and Reversed Shuffle modes.
 
 ![Alt text](./Hiswing.png)
 ---
