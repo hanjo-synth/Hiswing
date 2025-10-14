@@ -39,7 +39,7 @@ Note Mode:
 - **`E3`**: Change groove template  
 - **`K3 + E2`**: Change MIDI channel  
 - **`K3 + E3`**: Adjust pattern reduction  
-
+- **`K3 + K2`**: Shuffle Modes 
 ---
 
 ### **On Note Page**
