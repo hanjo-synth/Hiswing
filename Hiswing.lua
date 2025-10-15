@@ -1,11 +1,12 @@
--- HiSwing v2.1
--- Circklon-style Note Sequencing Tr-909 inspired Swing
--- TR-909 style Shuffle Modes
+-- HiSwing v2.1 
 -- 
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
 -- HANJO, Tokyo, Japan.
 -- 
+-- Circklon-style Note Sequencing 
+-- TR-909 style Shuffle Modes
+--
 -- K3 + E1: Toggle Pages.
 -- K2: Randomize step velocities.
 -- E2: Change pattern length.
@@ -388,8 +389,16 @@ function redraw()
                 
                 -- Draw step
                 screen.level(i == selected_step and 15 or 8) -- Highlight selected step
-                screen.move(x, 64)
-                screen.line(x, 64-note_height)
+                
+                if i == selected_step then
+                    -- For active step: draw line 4 pixels higher
+                    screen.move(x, 60)  -- 64 - 4 = 60 (moved up 4 pixels)
+                    screen.line(x, 60-note_height)  -- Adjusted endpoint
+                else
+                    -- For inactive steps: draw at normal position
+                    screen.move(x, 64)
+                    screen.line(x, 64-note_height)
+                end
                 screen.stroke()
             end
         end
@@ -457,5 +466,6 @@ function metro_redraw()
 end
 
 clock.run(metro_redraw)
+
 
 
