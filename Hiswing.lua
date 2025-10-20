@@ -1,4 +1,4 @@
--- HiSwing v2.1 
+-- HiSwing v2.2 
 -- 
 -- Patterns arise and decay: 
 -- steps, velocity, and density are fluid, mutable, responsive.
@@ -21,6 +21,7 @@
 -- E2: Navigate and select steps
 -- E3: Change note value
 -- 
+-- K3 double-click: Toggle step counter display
 
 local musicutil = require "musicutil"
 local midi = require "core/midi"
@@ -50,6 +51,11 @@ local swing_enabled = false
 local swing_amount = 0 -- 0=off, 1-5=normal swing, 6-10=reverse swing
 local swing_delay_times = {0, 2/96, 4/96, 6/96, 8/96, 10/96} -- TR-909 style delays (S1-S5)
 
+-- Step counter display variables
+local show_step_counter = false
+local last_k3_press_time = 0
+local double_click_threshold = 0.3 -- seconds
+
 -- define grooves as absolute MIDI velocities
 local grooves = {
     {127,100,127,100,127,100,127,100,127,100,127,100,127,100,127,100}, -- house 1
@@ -76,6 +82,16 @@ function init()
         print("Available scales: " .. #scales)
         clock.run(clock_run)
     end
+end
+
+function count_active_steps()
+    local count = 0
+    for i = 1, length do
+        if active_steps[i] then
+            count = count + 1
+        end
+    end
+    return count
 end
 
 function toggle_swing()
@@ -273,7 +289,19 @@ function key(n,z)
             redraw()
         end
     elseif n == 3 then
-        holding_k3 = (z == 1)
+        if z == 1 then
+            -- K3 pressed - check for double click
+            local current_time = util.time()
+            if current_time - last_k3_press_time < double_click_threshold then
+                -- Double click detected - toggle step counter display
+                show_step_counter = not show_step_counter
+                redraw()
+            end
+            last_k3_press_time = current_time
+            holding_k3 = true
+        else
+            holding_k3 = false
+        end
     end
 end
 
@@ -367,8 +395,16 @@ function redraw()
         screen.level(15)
         
         -- Top info text for note page
-        screen.move(10,10)
-        screen.text(musicutil.note_num_to_name(root_note) .. "  " .. scales[scale_index].name)
+        if show_step_counter then
+            -- Show step counter display
+            local active_count = count_active_steps()
+            screen.move(10,10)
+            screen.text("STEPS: " .. active_count .. "/" .. length)
+        else
+            -- Original display
+            screen.move(10,10)
+            screen.text(musicutil.note_num_to_name(root_note) .. "  " .. scales[scale_index].name)
+        end
         
         -- Display active step note on top right
         local active_note_display = musicutil.note_num_to_name(get_transposed_note(note_pattern[selected_step]))
@@ -407,19 +443,28 @@ function redraw()
         -- VELOCITY PAGE DISPLAY - Shows VELOCITY pattern
         screen.level(15)
         
-        -- Top info text with swing indicator
-        screen.move(10,10)
-        if length == 0 then
-            screen.text("STOP")
+        -- Top info text
+        if show_step_counter then
+            -- Show step counter display
+            local active_count = count_active_steps()
+            screen.move(10,10)
+            screen.text("STEPS: " .. active_count .. "/" .. length)
         else
-            local swing_display = get_swing_display()
-            if swing_display ~= "" then
-                screen.text("MIDI CH:"..midi_channel.." "..swing_display)
+            -- Original display with swing indicator
+            screen.move(10,10)
+            if length == 0 then
+                screen.text("STOP")
             else
-                screen.text("MIDI CH:"..midi_channel)
+                local swing_display = get_swing_display()
+                if swing_display ~= "" then
+                    screen.text("MIDI CH:"..midi_channel.." "..swing_display)
+                else
+                    screen.text("MIDI CH:"..midi_channel)
+                end
             end
         end
-        
+
+        -- Right side info (always shows original info)
         screen.move(80,10)
         if length == 0 then
             screen.text("LEN: 0")
@@ -466,6 +511,3 @@ function metro_redraw()
 end
 
 clock.run(metro_redraw)
-
-
-
